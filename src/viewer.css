@@ -1,0 +1,1445 @@
+/* Viewer Styles - Fullscreen viewer interface */
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Viewer Frame */
+.viewer-frame {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.viewer-frame .viewer-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Loading and Error States */
+.viewer-loading,
+.viewer-error {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.loading-content,
+.error-content {
+  text-align: center;
+  max-width: 400px;
+  padding: 40px 20px;
+}
+
+.loading-content h2,
+.error-content h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.loading-content p,
+.error-content p {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.error-content button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.error-content button:hover {
+  background: #ff5252;
+}
+
+/* Single Page Viewer */
+.single-page-viewer {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image-wrapper {
+  position: relative;
+  /*max-width: 100%;*/
+  /*max-height: 100%;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;/*new*/
+}
+
+/* Click zones */
+.click-zone {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: 2;
+  transition: background-color 0.2s;
+}
+
+.click-zone:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.left-zone {
+  left: 0;
+  width: 50%;
+}
+
+.right-zone {
+  right: 0;
+  width: 50%;
+}
+
+/* Placeholder Image */
+.placeholder-image {
+  width: 600px;
+  height: 800px;
+  background: #1a1a1a;
+  border: 2px solid #333;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+}
+
+.placeholder-content h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.placeholder-content p {
+  font-size: 16px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.navigation-hint {
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.navigation-hint p {
+  margin-bottom: 5px;
+}
+
+/* Image Loading */
+.image-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #333;
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.image-loading p {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+/* Image Error */
+.image-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background: #2a1a1a;
+  padding: 40px;
+  border-radius: 8px;
+  border: 1px solid #ff6b6b;
+  max-width: 400px;
+}
+
+.image-error h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #ff6b6b;
+}
+
+.image-error p {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+/* Page Info Overlay */
+.page-info-overlay {
+  display: none;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 5;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page-number,
+.view-mode,
+.zoom-level {
+  display: block;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.page-number {
+  font-weight: 600;
+  color: #fff;
+}
+
+.view-mode,
+.zoom-level {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+
+/* Viewer Controls */
+.viewer-controls {
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 100;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.viewer-controls.collapsed {
+  transform: translateY(calc(100% - 60px));
+}
+
+.controls-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.controls-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Navigation Controls */
+.navigation .nav-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  min-width: 40px;
+}
+
+.navigation .nav-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.navigation .nav-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.page-input-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 8px;
+}
+
+.page-input {
+  width: 50px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+}
+
+.page-separator,
+.page-total {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+/* Mode Selector */
+.mode-select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  outline: none;
+}
+
+.mode-select:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Zoom Controls */
+.zoom .zoom-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.zoom .zoom-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.zoom .zoom-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.zoom-display {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 60px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.zoom-display:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Rating Controls */
+.rating-label {
+  font-size: 14px;
+  margin-right: 8px;
+  opacity: 0.8;
+}
+
+.rating-slider {
+  width: 120px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.rating-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.rating-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.rating-display {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 40px;
+  text-align: center;
+  margin-left: 8px;
+}
+
+/* Action Controls */
+.actions button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.actions button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.close-button {
+  background: rgba(255, 107, 107, 0.2) !important;
+  border-color: rgba(255, 107, 107, 0.3) !important;
+}
+
+.close-button:hover {
+  background: rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Media control buttons */
+.media-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.media-control-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.media-control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Webtoon controls */
+.webtoon-controls {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.webtoon-controls .media-controls {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0;
+}
+
+.webtoon-controls .media-controls button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.webtoon-controls .media-controls button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Modal Styles - Fixed Positioning and Consistent Theme */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 40vh;
+  z-index: 10000;
+}
+
+/* Unified Modal Content Styling */
+.modal-content,
+.tag-selector-modal,
+.rating-slider-modal,
+.tag-manager-dialog {
+  position: relative;
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  max-width: 90vw;
+  max-height: 40vh;
+  overflow: hidden;
+  margin: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0);
+}
+
+/* Ensure modal stays in viewport */
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding-top: 60vh;
+  }
+
+  .modal-content,
+  .tag-selector-modal,
+  .rating-slider-modal,
+  .tag-manager-dialog {
+    max-width: 95vw;
+    max-height: 35vh;
+    margin: 0;
+  }
+}
+
+@media (max-height: 600px) {
+  .modal-overlay {
+    padding-top: 50vh;
+  }
+
+  .modal-content,
+  .tag-selector-modal,
+  .rating-slider-modal,
+  .tag-manager-dialog {
+    max-height: 45vh;
+  }
+}
+
+/* Unified Modal Header */
+.modal-header,
+.tag-manager-header {
+  background: rgba(20, 20, 20, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3,
+.tag-manager-header h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal-header button,
+.tag-manager-header .close-button {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.modal-header button:hover,
+.tag-manager-header .close-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Unified Modal Body */
+.modal-body {
+  background: rgba(30, 30, 30, 0.95);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Unified Modal Footer */
+.modal-footer,
+.tag-manager-footer {
+  background: rgba(20, 20, 20, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Form Elements Styling */
+.modal-body input,
+.modal-body select,
+.modal-body textarea,
+.tag-selector input,
+.tag-selector select,
+.tag-selector textarea,
+.rating-slider-container input {
+  background: rgba(40, 40, 40, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-body input:focus,
+.modal-body select:focus,
+.modal-body textarea:focus,
+.tag-selector input:focus,
+.tag-selector select:focus,
+.tag-selector textarea:focus,
+.rating-slider-container input:focus {
+  outline: none;
+  border-color: rgba(100, 150, 255, 0.5);
+  box-shadow: 0 0 0 2px rgba(100, 150, 255, 0.2);
+}
+
+.modal-body button,
+.tag-selector button,
+.rating-slider-container button {
+  background: rgba(100, 150, 255, 0.8);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.modal-body button:hover,
+.tag-selector button:hover,
+.rating-slider-container button:hover {
+  background: rgba(100, 150, 255, 1);
+  transform: translateY(-1px);
+}
+
+.modal-body button:disabled,
+.tag-selector button:disabled,
+.rating-slider-container button:disabled {
+  background: rgba(100, 100, 100, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Modal Close Button Styling */
+.modal-close-button,
+.close-dialog-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.modal-close-button:hover,
+.close-dialog-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Tag Selector Specific Fixes */
+.tag-selector {
+  min-width: 400px;
+}
+
+.tag-search-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tag-search-input {
+  flex: 1;
+}
+
+.tag-options-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+.tag-option-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 4px 0;
+  background: rgba(40, 40, 40, 0.5);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tag-option-item:hover {
+  background: rgba(60, 60, 60, 0.8);
+}
+
+.tag-option-item.selected {
+  background: rgba(100, 150, 255, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.3);
+}
+
+.tag-option-input {
+  margin-right: 8px;
+}
+
+.tag-option-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.selected-tags-summary {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(40, 40, 40, 0.3);
+  border-radius: 4px;
+}
+
+.selected-count {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.selected-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.selected-tag-pill {
+  background: rgba(100, 150, 255, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.selected-tag-more {
+  background: rgba(100, 100, 100, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.clear-selection {
+  background: rgba(255, 100, 100, 0.2);
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-selection:hover {
+  background: rgba(255, 100, 100, 0.3);
+}
+
+/* Rating Slider Specific Fixes */
+.rating-slider-container {
+  min-width: 350px;
+  padding: 20px;
+}
+
+.rating-slider {
+  margin: 16px 0;
+}
+
+.rating-range-input {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.rating-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.rating-range-input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.rating-number-container {
+  margin-top: 16px;
+}
+
+.rating-number-input {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Collection Selector Specific Fixes */
+.tag-manager-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 40vh;
+  z-index: 10000;
+}
+
+.tag-manager-dialog {
+  position: relative;
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 40vh;
+  overflow: hidden;
+  margin: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.tag-manager-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 8px;
+  margin: 8px 0;
+}
+
+.tag-item-compact {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin: 4px 0;
+  background: rgba(40, 40, 40, 0.5);
+  transition: all 0.2s ease;
+}
+
+.tag-item-compact:hover {
+  background: rgba(60, 60, 60, 0.8);
+}
+
+.tag-display-compact {
+  width: 100%;
+}
+
+.tag-name-compact {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.add-tag-button {
+  background: rgba(100, 150, 255, 0.8);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.add-tag-button:hover:not(:disabled) {
+  background: rgba(100, 150, 255, 1);
+  transform: translateY(-1px);
+}
+
+.add-tag-button:disabled {
+  background: rgba(100, 100, 100, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading and Error States */
+.loading-existing-tags,
+.loading,
+.no-tags-found,
+.no-tags {
+  text-align: center;
+  padding: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+.tag-manager-error {
+  margin: 8px 16px;
+  padding: 8px 12px;
+  background: rgba(255, 100, 100, 0.2);
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+/* Expanded Controls */
+.controls-expanded {
+  background: rgba(0, 0, 0, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 20px;
+}
+
+.expanded-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 20px;
+}
+
+.expanded-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Progress Bar */
+.progress-label {
+  font-size: 14px;
+  margin-right: 12px;
+  opacity: 0.8;
+}
+
+.progress-bar-container {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-container.manga-mode {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #8BC34A);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.progress-display {
+  margin-left: 12px;
+  font-size: 14px;
+  min-width: 50px;
+  text-align: right;
+  opacity: 0.8;
+}
+
+/* Zoom Presets */
+.zoom-presets .preset-label,
+.rating-presets .preset-label {
+  font-size: 14px;
+  margin-right: 12px;
+  opacity: 0.8;
+}
+
+.zoom-preset,
+.rating-preset {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.zoom-preset:hover,
+.rating-preset:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.zoom-preset.active,
+.rating-preset.active {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: rgba(76, 175, 80, 0.5);
+}
+
+/* Keyboard Shortcuts */
+.shortcuts .shortcuts-title {
+  font-size: 14px;
+  margin-right: 12px;
+  opacity: 0.8;
+}
+
+.shortcut {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+
+/* Webtoon Viewer */
+.webtoon-viewer {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  background: #000;
+}
+
+/* Viewer Placeholder */
+.viewer-placeholder {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.placeholder-content {
+  text-align: center;
+  max-width: 500px;
+  padding: 40px;
+}
+
+.placeholder-content h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.placeholder-content p {
+  font-size: 16px;
+  opacity: 0.7;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .controls-main {
+    padding: 8px 12px;
+    gap: 12px;
+  }
+  
+  .controls-section {
+    gap: 6px;
+  }
+  
+  .navigation .nav-button {
+    padding: 6px 8px;
+    font-size: 12px;
+    min-width: 32px;
+  }
+  
+  .page-input {
+    width: 40px;
+    font-size: 12px;
+  }
+  
+  .zoom .zoom-button {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  
+  .zoom-display {
+    min-width: 50px;
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .rating-slider {
+    width: 80px;
+  }
+  
+  .expanded-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .page-info-overlay {
+    top: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-height: 600px) {
+  .viewer-controls.collapsed {
+    transform: translateY(calc(100% - 40px));
+  }
+  
+  .controls-main {
+    padding: 8px 16px;
+  }
+}
+
+/* Webtoon Viewer Styles */
+.webtoon-viewer {
+  flex: 1;
+  width: 100%;
+  background: #000;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  scroll-behavior: auto !important;
+}
+
+.webtoon-viewer.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-message {
+  color: #fff;
+  font-size: 18px;
+  opacity: 0.7;
+}
+
+.webtoon-page {
+  width: 100%;
+  display: block;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.webtoon-page img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Webtoon Zoom Container - Continuous Strip */
+.webtoon-zoom-container {
+  width: 80%;
+  margin: 0 auto;
+  transform-origin: top center;
+  transition: width 0.2s ease;
+}
+
+.page-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.placeholder-content {
+  text-align: center;
+  color: #fff;
+  opacity: 0.5;
+}
+
+.loading-text {
+  font-size: 16px;
+}
+
+.error-message {
+  font-size: 16px;
+  color: #ff6b6b;
+}
+
+/* Hold Indicators */
+.hold-indicator {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+  color: #fff;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.hold-indicator.top {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+}
+
+.hold-indicator.bottom {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.hold-indicator.active {
+  opacity: 1;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.hold-text {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* Progress Container */
+.progress-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.progress-info {
+  color: #fff;
+  font-size: 12px;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+.progress-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.progress-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.progress-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.progress-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.progress-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+
+/* Custom Scrollbar for Webtoon Mode */
+.webtoon-viewer::-webkit-scrollbar {
+  width: 12px;
+}
+
+.webtoon-viewer::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.webtoon-viewer::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.webtoon-viewer::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Media Grid Clickable Styles */
+.media-grid-item.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.media-grid-item.clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.media-grid-thumbnail.clickable {
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .progress-container {
+    bottom: 10px;
+    right: 10px;
+    min-width: 150px;
+    padding: 10px;
+  }
+  
+    
+  .hold-indicator {
+    height: 80px;
+    font-size: 12px;
+  }
+  
+  .webtoon-page {
+    padding: 0;
+  }
+  
+  .page-placeholder {
+    margin: 0;
+    min-height: 150px;
+  }
+}

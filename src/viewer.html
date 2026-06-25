@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PeraPera Viewer</title>
+  <style>
+    body { 
+      margin: 0; 
+      padding: 0; 
+      background: #000; 
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    #root { 
+      width: 100vw; 
+      height: 100vh; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .loading {
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+    }
+    .error {
+      color: #ff6b6b;
+      font-size: 16px;
+      text-align: center;
+      max-width: 400px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="loading">Loading PeraPera Viewer...</div>
+  </div>
+  <script>
+    console.log('Viewer HTML: Document loaded');
+    console.log('Viewer HTML: window.electronAPI available:', !!window.electronAPI);
+    
+    // Add error handling for script loading
+    window.addEventListener('error', function(e) {
+      console.error('Viewer HTML: Global error:', e.error);
+      document.getElementById('root').innerHTML = '<div class="error">Error: ' + e.error.message + '</div>';
+    });
+    
+    window.addEventListener('unhandledrejection', function(e) {
+      console.error('Viewer HTML: Unhandled rejection:', e.reason);
+      document.getElementById('root').innerHTML = '<div class="error">Error: ' + e.reason + '</div>';
+    });
+  </script>
+  <script type="module" src="./viewer.jsx"></script>
+</body>
+</html>

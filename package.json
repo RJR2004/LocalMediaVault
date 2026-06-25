@@ -1,0 +1,89 @@
+{
+  "name": "perapera",
+  "version": "1.0.0",
+  "description": "A modern media library manager built with Electron and React",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "electron": "electron .",
+    "electron-dev": "vite build && electron .",
+    "start": "npm run build && electron .",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "sharp": "^0.33.5",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "electron": "^42.0.0",
+    "electron-builder": "^26.15.3",
+    "vite": "^8.0.10"
+  },
+  "build": {
+    "appId": "com.perapera.app",
+    "productName": "PeraPera",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "assets/**/*",
+      "src/**/*",
+      "package.json",
+      "index.html",
+      "vite.config.js",
+      "public/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "node_modules/sharp",
+        "to": "node_modules/sharp"
+      },
+      {
+        "from": "node_modules/sqlite3",
+        "to": "node_modules/sqlite3"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/icon.icns",
+      "category": "public.app-category.utilities"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
